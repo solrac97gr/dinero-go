@@ -11,3 +11,11 @@ func (d *Dinero) GetCurrency() string {
 func (d *Dinero) GetLocale() string {
 	return d.Locale
 }
+
+func (d *Dinero) isZero() bool {
+	if d.Amount == 0 {
+		return true
+	} else {
+		return false
+	}
+}
