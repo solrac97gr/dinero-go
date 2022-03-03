@@ -7,3 +7,7 @@ func (d *Dinero) GetAmount() float64 {
 func (d *Dinero) GetCurrency() string {
 	return d.Currency
 }
+
+func (d *Dinero) GetLocale() string {
+	return d.Locale
+}
