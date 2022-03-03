@@ -121,3 +121,6 @@ func TestMinimun(t *testing.T) {}
 
 //TODO: Implement
 func TestMaximun(t *testing.T) {}
+
+//TODO: Implement
+func TestGlobals(t *testing.T) {}
