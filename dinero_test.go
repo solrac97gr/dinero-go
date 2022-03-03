@@ -77,8 +77,19 @@ func TestGreatherThan(t *testing.T) {}
 //TODO: Implement
 func TestGreatherThanOrEquals(t *testing.T) {}
 
-//TODO: Implement
-func TestIsZero(t *testing.T) {}
+func TestIsZero(t *testing.T) {
+	const amount float64 = 0
+
+	dinero, err := dinerogo.NewDinero(0)
+	if err != nil {
+		t.Error("Fail to create the Dinero object")
+	}
+
+	if dinero.isZero() != true {
+		t.Error("The function is not returning correct result")
+	}
+
+}
 
 //TODO: Implement
 func TestIsPositive(t *testing.T) {}
