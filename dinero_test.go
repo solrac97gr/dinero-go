@@ -8,7 +8,7 @@ import (
 
 func TestNewDinero(t *testing.T) {
 	const amount float64 = 3400
-	_, err := dinerogo.NewDinero(amount)
+	_, err := dinerogo.NewDinero(amount, "USD")
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -17,7 +17,7 @@ func TestNewDinero(t *testing.T) {
 func TestGetAmount(t *testing.T) {
 	const amount float64 = 3400
 
-	dinero, err := dinerogo.NewDinero(3400)
+	dinero, err := dinerogo.NewDinero(3400, "USD")
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -27,7 +27,18 @@ func TestGetAmount(t *testing.T) {
 }
 
 //TODO: Implement
-func TestGetCurrency(t *testing.T) {}
+func TestGetCurrency(t *testing.T) {
+	const amount float64 = 3400
+	const currency string = "USD"
+
+	dinero, err := dinerogo.NewDinero(amount, currency)
+	if err != nil {
+		t.Error("Fail to create the Dinero object")
+	}
+	if dinero.GetCurrency() != currency {
+		t.Error("The currency in the create object its not correct")
+	}
+}
 
 //TODO: Implement
 func TestGetLocale(t *testing.T) {}
