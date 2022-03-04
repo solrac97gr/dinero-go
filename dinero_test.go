@@ -56,7 +56,27 @@ func TestGetLocale(t *testing.T) {
 }
 
 //TODO: Implement
-func TestSetLocale(t *testing.T) {}
+func TestSetLocale(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
+	const localeExpected string = "es"
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
+
+	err = dinero.SetLocale(localeExpected)
+	if err != nil {
+		t.Error("Fail to set locale")
+	}
+
+	if dinero.GetLocale() != "es" {
+		t.Errorf("the locale of the object is not correct should be %s but is %s", localeExpected, dinero.GetLocale())
+	}
+
+}
 
 //TODO: Implement
 func TestGetPrecision(t *testing.T) {}
