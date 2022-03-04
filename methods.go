@@ -146,6 +146,19 @@ func (d *Dinero) Divide(divider float64) (*Dinero, error) {
 	}, nil
 }
 
+// Percentage : Get a Percentage of the amount of money
+func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
+	if percentage <= 0 && percentage > 100 {
+		return &Dinero{}, errors.New("the percentage must be from 1 to 100")
+	}
+	return &Dinero{
+		Amount:    d.Amount * (float64(percentage) / 100),
+		Currency:  d.Currency,
+		Locale:    d.Locale,
+		Precision: d.Precision,
+	}, nil
+}
+
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
 	if d.Amount == 0 {
