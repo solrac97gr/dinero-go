@@ -1,14 +1,16 @@
 package dinerogo
 
+import "errors"
+
+// GetAmount : Get the amount of the dinero object
 func (d *Dinero) GetAmount() float64 {
 	return d.Amount
 }
 
+// GetCurrency : Get currency of the Dinero Obj
 func (d *Dinero) GetCurrency() string {
 	return d.Currency
 }
-<<<<<<< Updated upstream
-=======
 
 // GetLocale : Get the current locale set of a Dinero obj
 func (d *Dinero) GetLocale() string {
@@ -32,4 +34,3 @@ func (d *Dinero) SetLocale(locale string) error {
 	}
 	return errors.New("not valid locale format")
 }
->>>>>>> Stashed changes

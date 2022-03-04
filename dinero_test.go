@@ -8,7 +8,7 @@ import (
 
 func TestNewDinero(t *testing.T) {
 	const amount float64 = 3400
-	_, err := dinerogo.NewDinero(amount, "USD")
+	_, err := dinerogo.NewDinero(amount, "USD", "fr")
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -17,7 +17,7 @@ func TestNewDinero(t *testing.T) {
 func TestGetAmount(t *testing.T) {
 	const amount float64 = 3400
 
-	dinero, err := dinerogo.NewDinero(3400, "USD")
+	dinero, err := dinerogo.NewDinero(3400, "USD", "fr")
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -31,7 +31,7 @@ func TestGetCurrency(t *testing.T) {
 	const amount float64 = 3400
 	const currency string = "USD"
 
-	dinero, err := dinerogo.NewDinero(amount, currency)
+	dinero, err := dinerogo.NewDinero(amount, currency, "es")
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -41,10 +41,42 @@ func TestGetCurrency(t *testing.T) {
 }
 
 //TODO: Implement
-func TestGetLocale(t *testing.T) {}
+func TestGetLocale(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale)
+	if err != nil {
+		t.Error("Fail to create Dinero Object")
+	}
+	if dinero.GetLocale() != locale {
+		t.Error("The locale in the create object is not correct")
+	}
+}
 
 //TODO: Implement
-func TestSetLocale(t *testing.T) {}
+func TestSetLocale(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
+	const localeExpected string = "es"
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
+
+	err = dinero.SetLocale(localeExpected)
+	if err != nil {
+		t.Error("Fail to set locale")
+	}
+
+	if dinero.GetLocale() != "es" {
+		t.Errorf("the locale of the object is not correct should be %s but is %s", localeExpected, dinero.GetLocale())
+	}
+
+}
 
 //TODO: Implement
 func TestGetPrecision(t *testing.T) {}
@@ -88,10 +120,6 @@ func TestGreatherThan(t *testing.T) {}
 //TODO: Implement
 func TestGreatherThanOrEquals(t *testing.T) {}
 
-<<<<<<< Updated upstream
-//TODO: Implement
-func TestIsZero(t *testing.T) {}
-=======
 func TestIsZero(t *testing.T) {
 	const amount float64 = 0
 
@@ -105,7 +133,6 @@ func TestIsZero(t *testing.T) {
 	}
 
 }
->>>>>>> Stashed changes
 
 //TODO: Implement
 func TestIsPositive(t *testing.T) {}
