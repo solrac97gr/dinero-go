@@ -1,6 +1,7 @@
 package dinerogo_test
 
 import (
+	"math"
 	"testing"
 
 	dinerogo "github.com/solrac97gr/dinero-go"
@@ -93,7 +94,34 @@ func TestGetPrecision(t *testing.T) {
 }
 
 //TODO: Implement
-func TestConvertPrecision(t *testing.T) {}
+func TestConvertPrecision(t *testing.T) {
+	const amount float64 = 100
+	const currency string = "USD"
+	const locale string = "en"
+	const precision uint8 = 3
+	const newPrecision uint8 = 4
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, precision)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
+
+	newDinero := dinero.ConvertPrecision(newPrecision)
+
+	if newDinero.GetPrecision() != newPrecision {
+		t.Error("The convertion is not updating the precision")
+	}
+
+	if dinero.Precision != 0 {
+		if newDinero.GetAmount() != math.RoundToEven((dinero.GetAmount()/(math.Pow(10, float64(dinero.Precision))))*(math.Pow(10, float64(newPrecision)))) {
+			t.Error("The converted amount its not correct")
+		}
+	} else {
+		if newDinero.GetAmount() != math.RoundToEven(dinero.GetAmount()*(math.Pow(10, float64(newPrecision)))) {
+			t.Error("The converted amount its not correct")
+		}
+	}
+}
 
 //TODO: Implement
 func TestAdd(t *testing.T) {}
