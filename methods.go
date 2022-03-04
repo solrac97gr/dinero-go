@@ -1,6 +1,9 @@
 package dinerogo
 
-import "errors"
+import (
+	"errors"
+	"math"
+)
 
 // GetAmount : Get the amount of the dinero object
 func (d *Dinero) GetAmount() float64 {
@@ -38,4 +41,22 @@ func (d *Dinero) SetLocale(locale string) error {
 // GetPrecision : Get the decimal precision of the Dinero obj
 func (d *Dinero) GetPrecision() uint8 {
 	return d.Precision
+}
+
+//ConvertPrecision :
+func (d *Dinero) ConvertPrecision(newPrecision uint8) *Dinero {
+	if d.Precision != 0 {
+		return &Dinero{
+			Amount:    math.RoundToEven((d.GetAmount() / (math.Pow(10, float64(d.Precision)))) * (math.Pow(10, float64(newPrecision)))),
+			Currency:  d.Currency,
+			Locale:    d.Locale,
+			Precision: newPrecision,
+		}
+	}
+	return &Dinero{
+		Amount:    math.RoundToEven(d.GetAmount() * (math.Pow(10, float64(newPrecision)))),
+		Currency:  d.Currency,
+		Locale:    d.Locale,
+		Precision: newPrecision,
+	}
 }
