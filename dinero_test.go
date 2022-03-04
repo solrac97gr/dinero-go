@@ -170,7 +170,20 @@ func TestSubtract(t *testing.T) {
 }
 
 //TODO: Implement
-func TestMultiply(t *testing.T) {}
+func TestMultiply(t *testing.T) {
+	const expectedResult float64 = 800
+	const multiplier float64 = 2.001
+
+	dinero, err := dinerogo.NewDinero(400, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+	newDinero := dinero.Multiply(multiplier)
+
+	if newDinero.GetAmount() != expectedResult {
+		t.Errorf("The result of add it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+	}
+}
 
 //TODO: Implement
 func TestDivide(t *testing.T) {}
