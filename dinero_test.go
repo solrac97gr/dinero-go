@@ -8,7 +8,7 @@ import (
 
 func TestNewDinero(t *testing.T) {
 	const amount float64 = 3400
-	_, err := dinerogo.NewDinero(amount, "USD", "fr")
+	_, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -17,7 +17,7 @@ func TestNewDinero(t *testing.T) {
 func TestGetAmount(t *testing.T) {
 	const amount float64 = 3400
 
-	dinero, err := dinerogo.NewDinero(3400, "USD", "fr")
+	dinero, err := dinerogo.NewDinero(3400, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -26,12 +26,11 @@ func TestGetAmount(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestGetCurrency(t *testing.T) {
 	const amount float64 = 3400
 	const currency string = "USD"
 
-	dinero, err := dinerogo.NewDinero(amount, currency, "es")
+	dinero, err := dinerogo.NewDinero(amount, currency, "es", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -40,13 +39,12 @@ func TestGetCurrency(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestGetLocale(t *testing.T) {
 	const amount float64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 
-	dinero, err := dinerogo.NewDinero(amount, currency, locale)
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, 2)
 	if err != nil {
 		t.Error("Fail to create Dinero Object")
 	}
@@ -55,14 +53,13 @@ func TestGetLocale(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestSetLocale(t *testing.T) {
 	const amount float64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 	const localeExpected string = "es"
 
-	dinero, err := dinerogo.NewDinero(amount, currency, locale)
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, 2)
 	if err != nil {
 		t.Error("Fail to create a Dinero Object")
 	}
@@ -79,7 +76,21 @@ func TestSetLocale(t *testing.T) {
 }
 
 //TODO: Implement
-func TestGetPrecision(t *testing.T) {}
+func TestGetPrecision(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
+	const precision uint8 = 5
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, precision)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
+
+	if dinero.GetPrecision() != precision {
+		t.Error("The precision is not the correct number")
+	}
+}
 
 //TODO: Implement
 func TestConvertPrecision(t *testing.T) {}
@@ -123,7 +134,7 @@ func TestGreatherThanOrEquals(t *testing.T) {}
 func TestIsZero(t *testing.T) {
 	const amount float64 = 0
 
-	dinero, err := dinerogo.NewDinero(amount, "USD", "fr")
+	dinero, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}

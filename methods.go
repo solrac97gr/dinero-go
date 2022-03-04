@@ -34,3 +34,8 @@ func (d *Dinero) SetLocale(locale string) error {
 	}
 	return errors.New("not valid locale format")
 }
+
+// GetPrecision : Get the decimal precision of the Dinero obj
+func (d *Dinero) GetPrecision() uint8 {
+	return d.Precision
+}
