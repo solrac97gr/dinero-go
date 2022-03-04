@@ -165,7 +165,7 @@ func TestSubtract(t *testing.T) {
 		t.Error(err.Error())
 	}
 	if dineroResult.GetAmount() != expectedResult {
-		t.Errorf("The result of add it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
+		t.Errorf("The result of subtract it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
 	}
 }
 
@@ -181,12 +181,28 @@ func TestMultiply(t *testing.T) {
 	newDinero := dinero.Multiply(multiplier)
 
 	if newDinero.GetAmount() != expectedResult {
-		t.Errorf("The result of add it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+		t.Errorf("The result of multiply it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
 	}
 }
 
 //TODO: Implement
-func TestDivide(t *testing.T) {}
+func TestDivide(t *testing.T) {
+	const expectedResult float64 = 52
+	const divider float64 = 2
+
+	dinero, err := dinerogo.NewDinero(105, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+	newDinero, err := dinero.Divide(divider)
+	if err != nil {
+		t.Error("the divider can't be 0")
+	}
+
+	if newDinero.GetAmount() != expectedResult {
+		t.Errorf("The result of divide it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+	}
+}
 
 //TODO: Implement
 func TestPercentage(t *testing.T) {}

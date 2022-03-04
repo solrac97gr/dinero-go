@@ -133,6 +133,19 @@ func (d *Dinero) Multiply(multiplier float64) *Dinero {
 	}
 }
 
+// Divide : Divide the value of a Dinero amount
+func (d *Dinero) Divide(divider float64) (*Dinero, error) {
+	if divider == 0 {
+		return &Dinero{}, errors.New("the divider can't be 0")
+	}
+	return &Dinero{
+		Amount:    math.RoundToEven(d.Amount / divider),
+		Currency:  d.Currency,
+		Locale:    d.Locale,
+		Precision: d.Precision,
+	}, nil
+}
+
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
 	if d.Amount == 0 {
