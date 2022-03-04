@@ -205,7 +205,26 @@ func TestDivide(t *testing.T) {
 }
 
 //TODO: Implement
-func TestPercentage(t *testing.T) {}
+func TestPercentage(t *testing.T) {
+	const expectedResult float64 = 5000
+	const percentage uint8 = 50
+	const amount float64 = 10000
+
+	dinero, err := dinerogo.NewDinero(amount, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+
+	newDinero, err := dinero.Percentage(percentage)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	if newDinero.GetAmount() != expectedResult {
+		t.Errorf("The result of divide it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+	}
+
+}
 
 //TODO: Implement
 func TestAllocate(t *testing.T) {}
