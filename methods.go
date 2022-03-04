@@ -86,6 +86,43 @@ func (d *Dinero) Add(dinero *Dinero) (*Dinero, error) {
 
 }
 
+// Subtract : Subtract a Dinero object to another Dinero object
+func (d *Dinero) Subtract(dinero *Dinero) (*Dinero, error) {
+	if d.Amount < dinero.Amount {
+		return &Dinero{}, errors.New("the dinero of subtract can be more than the actual")
+	}
+
+	if d.Currency != dinero.Currency {
+		return &Dinero{}, errors.New("dinero obj must be same currency")
+	}
+	if d.Precision == dinero.Precision {
+		return &Dinero{
+			Amount:    d.GetAmount() - dinero.GetAmount(),
+			Currency:  d.Currency,
+			Locale:    d.Locale,
+			Precision: d.Precision,
+		}, nil
+	}
+
+	if dinero.Precision > d.Precision {
+		newDinero := d.ConvertPrecision(dinero.Precision)
+		return &Dinero{
+			Amount:    dinero.GetAmount() - newDinero.GetAmount(),
+			Currency:  d.Currency,
+			Locale:    d.Locale,
+			Precision: dinero.Precision,
+		}, nil
+	}
+
+	newDinero := dinero.ConvertPrecision(d.Precision)
+	return &Dinero{
+		Amount:    d.GetAmount() - newDinero.GetAmount(),
+		Currency:  d.Currency,
+		Locale:    d.Locale,
+		Precision: d.Precision,
+	}, nil
+}
+
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
 	if d.Amount == 0 {
