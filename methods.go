@@ -123,6 +123,16 @@ func (d *Dinero) Subtract(dinero *Dinero) (*Dinero, error) {
 	}, nil
 }
 
+// Multiply : Multiply the value of a Dinero amount
+func (d *Dinero) Multiply(multiplier float64) *Dinero {
+	return &Dinero{
+		Amount:    math.RoundToEven(d.GetAmount() * multiplier),
+		Currency:  d.Currency,
+		Locale:    d.Locale,
+		Precision: d.Precision,
+	}
+}
+
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
 	if d.Amount == 0 {
