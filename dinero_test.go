@@ -124,7 +124,27 @@ func TestConvertPrecision(t *testing.T) {
 }
 
 //TODO: Implement
-func TestAdd(t *testing.T) {}
+func TestAdd(t *testing.T) {
+	const expectedResult float64 = 144545
+
+	dinero1, err := dinerogo.NewDinero(400, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+
+	dinero2, err := dinerogo.NewDinero(104545, "USD", "en", 4)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+
+	dineroResult, err := dinero1.Add(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if dineroResult.GetAmount() != expectedResult {
+		t.Errorf("The result of add it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
+	}
+}
 
 //TODO: Implement
 func TestSubstract(t *testing.T) {}
