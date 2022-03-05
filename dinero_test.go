@@ -290,7 +290,20 @@ func TestHasSubUnits(t *testing.T) {}
 func TestHasCents(t *testing.T) {}
 
 //TODO: Implement
-func TestHasSameCurrency(t *testing.T) {}
+func TestHasSameCurrency(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(500, "USD", "en", 2)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+
+	if dinero1.HasSameCurrency(dinero2) != true {
+		t.Error("The amount are the same, error in comparision")
+	}
+}
 
 //TODO: Implement
 func TestHasSameAmount(t *testing.T) {
