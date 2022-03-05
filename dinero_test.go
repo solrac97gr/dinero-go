@@ -235,15 +235,34 @@ func TestEqualsTo(t *testing.T) {
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-
-	if dinero1.EqualsTo(dinero2) != true {
-		t.Error("The comparition is not correct both objects are equals")
+	comparison, err := dinero1.EqualsTo(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if comparison != true {
+		t.Error("The comparison is not correct both objects are equals")
 	}
 
 }
 
 //TODO: Implement
-func TestLessThan(t *testing.T) {}
+func TestLessThan(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(500, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	comparison, err := dinero1.LessThan(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if comparison != true {
+		t.Error("The comparison is not correct both objects are equals")
+	}
+}
 
 //TODO: Implement
 func TestLessThanOrEquals(t *testing.T) {}
