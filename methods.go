@@ -186,6 +186,19 @@ func (d *Dinero) LessThan(dinero *Dinero) (bool, error) {
 	return d.Amount < dinero.Amount, nil
 }
 
+// LessThanOrEquals : Compare if a dinero object is less than or Equals to other
+func (d *Dinero) LessThanOrEquals(dinero *Dinero) (bool, error) {
+	if d.Currency != dinero.Currency {
+		return false, fmt.Errorf("the can't compare %s with %s", d.Currency, dinero.Currency)
+	}
+	if d.Precision != dinero.Precision {
+		newDinero := dinero.ConvertPrecision(d.Precision)
+		return d.Amount <= newDinero.Amount, nil
+
+	}
+	return d.Amount <= dinero.Amount, nil
+}
+
 // HasSameCurrency : Compare the currency inside of the Dinero object
 func (d *Dinero) HasSameCurrency(dinero *Dinero) bool {
 	return d.Currency == dinero.Currency
