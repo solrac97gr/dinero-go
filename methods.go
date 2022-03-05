@@ -168,3 +168,8 @@ func (d *Dinero) IsZero() bool {
 func (d *Dinero) IsPositive() bool {
 	return d.Amount > 0
 }
+
+// IsNegative Valid if the amount inside of the Dinero obj it's less than 0
+func (d *Dinero) IsNegative() bool {
+	return d.Amount < 0
+}
