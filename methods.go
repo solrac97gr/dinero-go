@@ -159,6 +159,19 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 	}, nil
 }
 
+// EqualsTo : Compare is the Dinero object is representing the same Dinero value
+func (d *Dinero) EqualsTo(dinero *Dinero) bool {
+
+	if d.Precision != dinero.Precision {
+
+		println("dinero1.Precision<dinero2.Precision")
+		newDinero := dinero.ConvertPrecision(d.Precision)
+		return d.Amount == newDinero.Amount && d.Currency == newDinero.Currency
+
+	}
+	return d.Amount == dinero.Amount && d.Currency == dinero.Currency
+}
+
 // HasSameCurrency : Compare the currency inside of the Dinero object
 func (d *Dinero) HasSameCurrency(dinero *Dinero) bool {
 	return d.Currency == dinero.Currency

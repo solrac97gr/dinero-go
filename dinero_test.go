@@ -76,7 +76,6 @@ func TestSetLocale(t *testing.T) {
 
 }
 
-//TODO: Implement
 func TestGetPrecision(t *testing.T) {
 	const amount float64 = 5000
 	const currency string = "EUR"
@@ -93,7 +92,6 @@ func TestGetPrecision(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestConvertPrecision(t *testing.T) {
 	const amount float64 = 100
 	const currency string = "USD"
@@ -123,7 +121,6 @@ func TestConvertPrecision(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestAdd(t *testing.T) {
 	const expectedResult float64 = 144545
 
@@ -146,7 +143,6 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestSubtract(t *testing.T) {
 	const expectedResult float64 = 64545
 
@@ -169,7 +165,6 @@ func TestSubtract(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestMultiply(t *testing.T) {
 	const expectedResult float64 = 800
 	const multiplier float64 = 2.001
@@ -185,7 +180,6 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestDivide(t *testing.T) {
 	const expectedResult float64 = 52
 	const divider float64 = 2
@@ -204,7 +198,6 @@ func TestDivide(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestPercentage(t *testing.T) {
 	const expectedResult float64 = 5000
 	const percentage uint8 = 50
@@ -233,7 +226,21 @@ func TestAllocate(t *testing.T) {}
 func TestConvert(t *testing.T) {}
 
 //TODO: Implement
-func TestEqualsTo(t *testing.T) {}
+func TestEqualsTo(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(500, "USD", "en", 2)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+
+	if dinero1.EqualsTo(dinero2) != true {
+		t.Error("The comparition is not correct both objects are equals")
+	}
+
+}
 
 //TODO: Implement
 func TestLessThan(t *testing.T) {}
@@ -261,7 +268,6 @@ func TestIsZero(t *testing.T) {
 
 }
 
-//TODO: Implement
 func TestIsPositive(t *testing.T) {
 	dinero, err := dinerogo.NewDinero(4000, "USD", "en", 2)
 	if err != nil {
@@ -272,7 +278,6 @@ func TestIsPositive(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestIsNegative(t *testing.T) {
 	dinero, err := dinerogo.NewDinero(-4000, "USD", "en", 2)
 	if err != nil {
@@ -289,7 +294,6 @@ func TestHasSubUnits(t *testing.T) {}
 //TODO: Implement
 func TestHasCents(t *testing.T) {}
 
-//TODO: Implement
 func TestHasSameCurrency(t *testing.T) {
 	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
 	if err != nil {
@@ -305,7 +309,6 @@ func TestHasSameCurrency(t *testing.T) {
 	}
 }
 
-//TODO: Implement
 func TestHasSameAmount(t *testing.T) {
 	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
 	if err != nil {
