@@ -159,6 +159,16 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 	}, nil
 }
 
+// HasSameAmount : Compare the amount inside of two Dinero object, converting to a same precision
+func (d *Dinero) HasSameAmount(dinero *Dinero) bool {
+	if d.Precision == dinero.Precision {
+		return d.Amount == dinero.Amount
+	}
+	newDinero := dinero.ConvertPrecision(d.Precision)
+
+	return d.Amount == newDinero.Amount
+}
+
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
 	return d.Amount == 0
