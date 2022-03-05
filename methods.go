@@ -159,6 +159,10 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 	}, nil
 }
 
+func (d *Dinero) Allocate(ratios []uint) []Dinero {
+	return []Dinero{}
+}
+
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
 	if d.Amount == 0 {
