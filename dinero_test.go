@@ -303,7 +303,23 @@ func TestGreatherThan(t *testing.T) {
 }
 
 //TODO: Implement
-func TestGreatherThanOrEquals(t *testing.T) {}
+func TestGreatherThanOrEquals(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(500, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	comparison, err := dinero1.GreatherThanOrEquals(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if comparison != true {
+		t.Error("The comparison is not correct both objects are equals")
+	}
+}
 
 func TestIsZero(t *testing.T) {
 	const amount float64 = 0
