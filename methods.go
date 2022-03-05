@@ -161,9 +161,10 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 
 // IsZero : Valid if the amount inside of Dinero obj it's 0
 func (d *Dinero) IsZero() bool {
-	if d.Amount == 0 {
-		return true
-	} else {
-		return false
-	}
+	return d.Amount == 0
+}
+
+// IsPositive : Valid if the amount inside of the Dinero obj it's more than 0
+func (d *Dinero) IsPositive() bool {
+	return d.Amount > 0
 }
