@@ -273,7 +273,15 @@ func TestIsPositive(t *testing.T) {
 }
 
 //TODO: Implement
-func TestIsNegative(t *testing.T) {}
+func TestIsNegative(t *testing.T) {
+	dinero, err := dinerogo.NewDinero(-4000, "USD", "en", 2)
+	if err != nil {
+		t.Log(err.Error())
+	}
+	if dinero.IsNegative() != true {
+		t.Error("The validation function is not returning a correct value")
+	}
+}
 
 //TODO: Implement
 func TestHasSubUnits(t *testing.T) {}
