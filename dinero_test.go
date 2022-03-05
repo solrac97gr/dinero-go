@@ -1,6 +1,7 @@
 package dinerogo_test
 
 import (
+	"math"
 	"testing"
 
 	dinerogo "github.com/solrac97gr/dinero-go"
@@ -8,7 +9,7 @@ import (
 
 func TestNewDinero(t *testing.T) {
 	const amount float64 = 3400
-	_, err := dinerogo.NewDinero(amount)
+	_, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -17,7 +18,7 @@ func TestNewDinero(t *testing.T) {
 func TestGetAmount(t *testing.T) {
 	const amount float64 = 3400
 
-	dinero, err := dinerogo.NewDinero(3400)
+	dinero, err := dinerogo.NewDinero(3400, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -26,35 +27,197 @@ func TestGetAmount(t *testing.T) {
 	}
 }
 
-//TODO: Implement
-func TestGetCurrency(t *testing.T) {}
+func TestGetCurrency(t *testing.T) {
+	const amount float64 = 3400
+	const currency string = "USD"
 
-//TODO: Implement
-func TestGetLocale(t *testing.T) {}
+	dinero, err := dinerogo.NewDinero(amount, currency, "es", 2)
+	if err != nil {
+		t.Error("Fail to create the Dinero object")
+	}
+	if dinero.GetCurrency() != currency {
+		t.Error("The currency in the create object its not correct")
+	}
+}
 
-//TODO: Implement
-func TestSetLocale(t *testing.T) {}
+func TestGetLocale(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
 
-//TODO: Implement
-func TestGetPrecision(t *testing.T) {}
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, 2)
+	if err != nil {
+		t.Error("Fail to create Dinero Object")
+	}
+	if dinero.GetLocale() != locale {
+		t.Error("The locale in the create object is not correct")
+	}
+}
 
-//TODO: Implement
-func TestConvertPrecision(t *testing.T) {}
+func TestSetLocale(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
+	const localeExpected string = "es"
 
-//TODO: Implement
-func TestAdd(t *testing.T) {}
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, 2)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
 
-//TODO: Implement
-func TestSubstract(t *testing.T) {}
+	err = dinero.SetLocale(localeExpected)
+	if err != nil {
+		t.Error("Fail to set locale")
+	}
 
-//TODO: Implement
-func TestMultiply(t *testing.T) {}
+	if dinero.GetLocale() != "es" {
+		t.Errorf("the locale of the object is not correct should be %s but is %s", localeExpected, dinero.GetLocale())
+	}
 
-//TODO: Implement
-func TestDivide(t *testing.T) {}
+}
 
-//TODO: Implement
-func TestPercentage(t *testing.T) {}
+func TestGetPrecision(t *testing.T) {
+	const amount float64 = 5000
+	const currency string = "EUR"
+	const locale string = "fr"
+	const precision uint8 = 5
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, precision)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
+
+	if dinero.GetPrecision() != precision {
+		t.Error("The precision is not the correct number")
+	}
+}
+
+func TestConvertPrecision(t *testing.T) {
+	const amount float64 = 100
+	const currency string = "USD"
+	const locale string = "en"
+	const precision uint8 = 3
+	const newPrecision uint8 = 4
+
+	dinero, err := dinerogo.NewDinero(amount, currency, locale, precision)
+	if err != nil {
+		t.Error("Fail to create a Dinero Object")
+	}
+
+	newDinero := dinero.ConvertPrecision(newPrecision)
+
+	if newDinero.GetPrecision() != newPrecision {
+		t.Error("The convertion is not updating the precision")
+	}
+
+	if dinero.Precision != 0 {
+		if newDinero.GetAmount() != math.RoundToEven((dinero.GetAmount()/(math.Pow(10, float64(dinero.Precision))))*(math.Pow(10, float64(newPrecision)))) {
+			t.Error("The converted amount its not correct")
+		}
+	} else {
+		if newDinero.GetAmount() != math.RoundToEven(dinero.GetAmount()*(math.Pow(10, float64(newPrecision)))) {
+			t.Error("The converted amount its not correct")
+		}
+	}
+}
+
+func TestAdd(t *testing.T) {
+	const expectedResult float64 = 144545
+
+	dinero1, err := dinerogo.NewDinero(400, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+
+	dinero2, err := dinerogo.NewDinero(104545, "USD", "en", 4)
+	if err != nil {
+		t.Error("Error creating the second Dinero")
+	}
+
+	dineroResult, err := dinero1.Add(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if dineroResult.GetAmount() != expectedResult {
+		t.Errorf("The result of add it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
+	}
+}
+
+func TestSubtract(t *testing.T) {
+	const expectedResult float64 = 64545
+
+	dinero1, err := dinerogo.NewDinero(104545, "USD", "en", 4)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(400, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the second Dinero")
+	}
+
+	dineroResult, err := dinero1.Subtract(dinero2)
+
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if dineroResult.GetAmount() != expectedResult {
+		t.Errorf("The result of subtract it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
+	}
+}
+
+func TestMultiply(t *testing.T) {
+	const expectedResult float64 = 800
+	const multiplier float64 = 2.001
+
+	dinero, err := dinerogo.NewDinero(400, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+	newDinero := dinero.Multiply(multiplier)
+
+	if newDinero.GetAmount() != expectedResult {
+		t.Errorf("The result of multiply it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+	}
+}
+
+func TestDivide(t *testing.T) {
+	const expectedResult float64 = 52
+	const divider float64 = 2
+
+	dinero, err := dinerogo.NewDinero(105, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+	newDinero, err := dinero.Divide(divider)
+	if err != nil {
+		t.Error("the divider can't be 0")
+	}
+
+	if newDinero.GetAmount() != expectedResult {
+		t.Errorf("The result of divide it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+	}
+}
+
+func TestPercentage(t *testing.T) {
+	const expectedResult float64 = 5000
+	const percentage uint8 = 50
+	const amount float64 = 10000
+
+	dinero, err := dinerogo.NewDinero(amount, "USD", "en", 2)
+	if err != nil {
+		t.Error("Error creating the first Dinero")
+	}
+
+	newDinero, err := dinero.Percentage(percentage)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	if newDinero.GetAmount() != expectedResult {
+		t.Errorf("The result of divide it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+	}
+
+}
 
 //TODO: Implement
 func TestAllocate(t *testing.T) {}
@@ -63,10 +226,43 @@ func TestAllocate(t *testing.T) {}
 func TestConvert(t *testing.T) {}
 
 //TODO: Implement
-func TestEqualsTo(t *testing.T) {}
+func TestEqualsTo(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(500, "USD", "en", 2)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	comparison, err := dinero1.EqualsTo(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if comparison != true {
+		t.Error("The comparison is not correct both objects are equals")
+	}
+
+}
 
 //TODO: Implement
-func TestLessThan(t *testing.T) {}
+func TestLessThan(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(500, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	comparison, err := dinero1.LessThan(dinero2)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	if comparison != true {
+		t.Error("The comparison is not correct both objects are equals")
+	}
+}
 
 //TODO: Implement
 func TestLessThanOrEquals(t *testing.T) {}
@@ -77,14 +273,39 @@ func TestGreatherThan(t *testing.T) {}
 //TODO: Implement
 func TestGreatherThanOrEquals(t *testing.T) {}
 
-//TODO: Implement
-func TestIsZero(t *testing.T) {}
+func TestIsZero(t *testing.T) {
+	const amount float64 = 0
 
-//TODO: Implement
-func TestIsPositive(t *testing.T) {}
+	dinero, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
+	if err != nil {
+		t.Error("Fail to create the Dinero object")
+	}
 
-//TODO: Implement
-func TestIsNegative(t *testing.T) {}
+	if dinero.IsZero() != true {
+		t.Error("The function is not returning correct result")
+	}
+
+}
+
+func TestIsPositive(t *testing.T) {
+	dinero, err := dinerogo.NewDinero(4000, "USD", "en", 2)
+	if err != nil {
+		t.Log(err.Error())
+	}
+	if dinero.IsPositive() != true {
+		t.Error("The validation function is not returning a correct value")
+	}
+}
+
+func TestIsNegative(t *testing.T) {
+	dinero, err := dinerogo.NewDinero(-4000, "USD", "en", 2)
+	if err != nil {
+		t.Log(err.Error())
+	}
+	if dinero.IsNegative() != true {
+		t.Error("The validation function is not returning a correct value")
+	}
+}
 
 //TODO: Implement
 func TestHasSubUnits(t *testing.T) {}
@@ -92,11 +313,36 @@ func TestHasSubUnits(t *testing.T) {}
 //TODO: Implement
 func TestHasCents(t *testing.T) {}
 
-//TODO: Implement
-func TestHasSameCurrency(t *testing.T) {}
+func TestHasSameCurrency(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(500, "USD", "en", 2)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
 
-//TODO: Implement
-func TestHasSameAmount(t *testing.T) {}
+	if dinero1.HasSameCurrency(dinero2) != true {
+		t.Error("The amount are the same, error in comparision")
+	}
+}
+
+func TestHasSameAmount(t *testing.T) {
+	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	dinero2, err := dinerogo.NewDinero(500, "USD", "en", 2)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+
+	if dinero1.HasSameAmount(dinero2) != true {
+		t.Error("The amount are the same, error in comparision")
+	}
+
+}
 
 //TODO: Implement
 func TestToFormat(t *testing.T) {}

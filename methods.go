@@ -2,9 +2,11 @@ package dinerogo
 
 import (
 	"errors"
+	"fmt"
 	"math"
 )
 
+// GetAmount : Get the amount of the dinero object
 func (d *Dinero) GetAmount() float64 {
 	return d.Amount
 }
@@ -159,15 +161,29 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 }
 
 // EqualsTo : Compare is the Dinero object is representing the same Dinero value
-func (d *Dinero) EqualsTo(dinero *Dinero) bool {
-
+func (d *Dinero) EqualsTo(dinero *Dinero) (bool, error) {
+	if d.Currency != dinero.Currency {
+		return false, fmt.Errorf("the can't compare %s with %s", d.Currency, dinero.Currency)
+	}
 	if d.Precision != dinero.Precision {
-		println("dinero1.Precision<dinero2.Precision")
 		newDinero := dinero.ConvertPrecision(d.Precision)
-		return d.Amount == newDinero.Amount && d.Currency == newDinero.Currency
+		return d.Amount == newDinero.Amount, nil
 
 	}
-	return d.Amount == dinero.Amount && d.Currency == dinero.Currency
+	return d.Amount == dinero.Amount, nil
+}
+
+// LessThan : Compare if a dinero object is less than other
+func (d *Dinero) LessThan(dinero *Dinero) (bool, error) {
+	if d.Currency != dinero.Currency {
+		return false, fmt.Errorf("the can't compare %s with %s", d.Currency, dinero.Currency)
+	}
+	if d.Precision != dinero.Precision {
+		newDinero := dinero.ConvertPrecision(d.Precision)
+		return d.Amount < newDinero.Amount, nil
+
+	}
+	return d.Amount < dinero.Amount, nil
 }
 
 // HasSameCurrency : Compare the currency inside of the Dinero object
