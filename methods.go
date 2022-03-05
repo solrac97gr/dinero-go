@@ -159,6 +159,11 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 	}, nil
 }
 
+// HasSameCurrency : Compare the currency inside of the Dinero object
+func (d *Dinero) HasSameCurrency(dinero *Dinero) bool {
+	return d.Currency == dinero.Currency
+}
+
 // HasSameAmount : Compare the amount inside of two Dinero object, converting to a same precision
 func (d *Dinero) HasSameAmount(dinero *Dinero) bool {
 	if d.Precision == dinero.Precision {
