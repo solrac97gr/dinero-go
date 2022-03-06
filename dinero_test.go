@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewDinero(t *testing.T) {
-	const amount float64 = 3400
+	const amount int64 = 3400
 	_, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
@@ -16,7 +16,7 @@ func TestNewDinero(t *testing.T) {
 }
 
 func TestGetAmount(t *testing.T) {
-	const amount float64 = 3400
+	const amount int64 = 3400
 
 	dinero, err := dinerogo.NewDinero(3400, "USD", "fr", 2)
 	if err != nil {
@@ -28,7 +28,7 @@ func TestGetAmount(t *testing.T) {
 }
 
 func TestGetCurrency(t *testing.T) {
-	const amount float64 = 3400
+	const amount int64 = 3400
 	const currency string = "USD"
 
 	dinero, err := dinerogo.NewDinero(amount, currency, "es", 2)
@@ -41,7 +41,7 @@ func TestGetCurrency(t *testing.T) {
 }
 
 func TestGetLocale(t *testing.T) {
-	const amount float64 = 5000
+	const amount int64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 
@@ -55,7 +55,7 @@ func TestGetLocale(t *testing.T) {
 }
 
 func TestSetLocale(t *testing.T) {
-	const amount float64 = 5000
+	const amount int64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 	const localeExpected string = "es"
@@ -77,7 +77,7 @@ func TestSetLocale(t *testing.T) {
 }
 
 func TestGetPrecision(t *testing.T) {
-	const amount float64 = 5000
+	const amount int64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 	const precision uint8 = 5
@@ -93,7 +93,7 @@ func TestGetPrecision(t *testing.T) {
 }
 
 func TestConvertPrecision(t *testing.T) {
-	const amount float64 = 100
+	const amount int64 = 100
 	const currency string = "USD"
 	const locale string = "en"
 	const precision uint8 = 3
@@ -122,7 +122,7 @@ func TestConvertPrecision(t *testing.T) {
 }
 
 func TestAdd(t *testing.T) {
-	const expectedResult float64 = 144545
+	const expectedResult int64 = 144545
 
 	dinero1, err := dinerogo.NewDinero(400, "USD", "en", 2)
 	if err != nil {
@@ -359,7 +359,15 @@ func TestIsNegative(t *testing.T) {
 func TestHasSubUnits(t *testing.T) {}
 
 //TODO: Implement
-func TestHasCents(t *testing.T) {}
+func TestHasCents(t *testing.T) {
+	dinero, err := dinerogo.NewDinero(5000, "USD", "en", 3)
+	if err != nil {
+		t.Error("Creating dinero")
+	}
+	if dinero.HasCents() {
+		t.Error("The object not have cents")
+	}
+}
 
 func TestHasSameCurrency(t *testing.T) {
 	dinero1, err := dinerogo.NewDinero(5000, "USD", "en", 3)

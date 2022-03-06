@@ -7,7 +7,7 @@ import (
 )
 
 // GetAmount : Get the amount of the dinero object
-func (d *Dinero) GetAmount() float64 {
+func (d *Dinero) GetAmount() int64 {
 	return d.Amount
 }
 
@@ -153,7 +153,7 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 		return &Dinero{}, errors.New("the percentage must be from 1 to 100")
 	}
 	return &Dinero{
-		Amount:    d.Amount * (float64(percentage) / 100),
+		Amount:    int64(d.Amount * (float64(percentage) / 100)),
 		Currency:  d.Currency,
 		Locale:    d.Locale,
 		Precision: d.Precision,
@@ -223,6 +223,12 @@ func (d *Dinero) GreatherThanOrEquals(dinero *Dinero) (bool, error) {
 
 	}
 	return d.Amount >= dinero.Amount, nil
+}
+
+// HasCents : Check if with the precision the dinero object have cents
+func (d *Dinero) HasCents() bool {
+	reminder := d.Amount % int64((math.Pow10(int(d.Precision))))
+	return reminder > 0
 }
 
 // HasSameCurrency : Compare the currency inside of the Dinero object
