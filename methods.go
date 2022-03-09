@@ -7,7 +7,7 @@ import (
 )
 
 // GetAmount : Get the amount of the dinero object
-func (d *Dinero) GetAmount() float64 {
+func (d *Dinero) GetAmount() int64 {
 	return d.Amount
 }
 
@@ -39,14 +39,15 @@ func (d *Dinero) GetPrecision() uint8 {
 func (d *Dinero) ConvertPrecision(newPrecision uint8) *Dinero {
 	if d.Precision != 0 {
 		return &Dinero{
-			Amount:    math.RoundToEven((d.GetAmount() / (math.Pow(10, float64(d.Precision)))) * (math.Pow(10, float64(newPrecision)))),
+			Amount:    int64(math.RoundToEven((float64(d.GetAmount()) / (math.Pow(10, float64(d.Precision)))) * (math.Pow(10, float64(newPrecision))))),
 			Currency:  d.Currency,
 			Locale:    d.Locale,
 			Precision: newPrecision,
 		}
 	}
 	return &Dinero{
-		Amount:    math.RoundToEven(d.GetAmount() * (math.Pow(10, float64(newPrecision)))),
+
+		Amount:    int64(math.RoundToEven(float64(d.GetAmount()) * (math.Pow(10, float64(newPrecision))))),
 		Currency:  d.Currency,
 		Locale:    d.Locale,
 		Precision: newPrecision,
@@ -125,9 +126,9 @@ func (d *Dinero) Subtract(dinero *Dinero) (*Dinero, error) {
 }
 
 // Multiply : Multiply the value of a Dinero amount
-func (d *Dinero) Multiply(multiplier float64) *Dinero {
+func (d *Dinero) Multiply(multiplier int64) *Dinero {
 	return &Dinero{
-		Amount:    math.RoundToEven(d.GetAmount() * multiplier),
+		Amount:    int64(math.RoundToEven(float64(d.GetAmount()) * float64(multiplier))),
 		Currency:  d.Currency,
 		Locale:    d.Locale,
 		Precision: d.Precision,
@@ -135,12 +136,12 @@ func (d *Dinero) Multiply(multiplier float64) *Dinero {
 }
 
 // Divide : Divide the value of a Dinero amount
-func (d *Dinero) Divide(divider float64) (*Dinero, error) {
+func (d *Dinero) Divide(divider int64) (*Dinero, error) {
 	if divider == 0 {
 		return &Dinero{}, errors.New("the divider can't be 0")
 	}
 	return &Dinero{
-		Amount:    math.RoundToEven(d.Amount / divider),
+		Amount:    int64(math.RoundToEven(float64(d.Amount) / float64(divider))),
 		Currency:  d.Currency,
 		Locale:    d.Locale,
 		Precision: d.Precision,
@@ -153,7 +154,7 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 		return &Dinero{}, errors.New("the percentage must be from 1 to 100")
 	}
 	return &Dinero{
-		Amount:    d.Amount * (float64(percentage) / 100),
+		Amount:    int64(float64(d.Amount) * float64(percentage) / 100),
 		Currency:  d.Currency,
 		Locale:    d.Locale,
 		Precision: d.Precision,

@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewDinero(t *testing.T) {
-	const amount float64 = 3400
+	const amount int64 = 3400
 	_, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
@@ -16,7 +16,7 @@ func TestNewDinero(t *testing.T) {
 }
 
 func TestGetAmount(t *testing.T) {
-	const amount float64 = 3400
+	const amount int64 = 3400
 
 	dinero, err := dinerogo.NewDinero(3400, "USD", "fr", 2)
 	if err != nil {
@@ -28,7 +28,7 @@ func TestGetAmount(t *testing.T) {
 }
 
 func TestGetCurrency(t *testing.T) {
-	const amount float64 = 3400
+	const amount int64 = 3400
 	const currency string = "USD"
 
 	dinero, err := dinerogo.NewDinero(amount, currency, "es", 2)
@@ -41,7 +41,7 @@ func TestGetCurrency(t *testing.T) {
 }
 
 func TestGetLocale(t *testing.T) {
-	const amount float64 = 5000
+	const amount int64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 
@@ -55,7 +55,7 @@ func TestGetLocale(t *testing.T) {
 }
 
 func TestSetLocale(t *testing.T) {
-	const amount float64 = 5000
+	const amount int64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 	const localeExpected string = "es"
@@ -77,7 +77,7 @@ func TestSetLocale(t *testing.T) {
 }
 
 func TestGetPrecision(t *testing.T) {
-	const amount float64 = 5000
+	const amount int64 = 5000
 	const currency string = "EUR"
 	const locale string = "fr"
 	const precision uint8 = 5
@@ -93,7 +93,7 @@ func TestGetPrecision(t *testing.T) {
 }
 
 func TestConvertPrecision(t *testing.T) {
-	const amount float64 = 100
+	const amount int64 = 100
 	const currency string = "USD"
 	const locale string = "en"
 	const precision uint8 = 3
@@ -111,18 +111,18 @@ func TestConvertPrecision(t *testing.T) {
 	}
 
 	if dinero.Precision != 0 {
-		if newDinero.GetAmount() != math.RoundToEven((dinero.GetAmount()/(math.Pow(10, float64(dinero.Precision))))*(math.Pow(10, float64(newPrecision)))) {
+		if newDinero.GetAmount() != int64(math.RoundToEven((float64(dinero.GetAmount())/(math.Pow(10, float64(dinero.Precision))))*(math.Pow(10, float64(newPrecision))))) {
 			t.Error("The converted amount its not correct")
 		}
 	} else {
-		if newDinero.GetAmount() != math.RoundToEven(dinero.GetAmount()*(math.Pow(10, float64(newPrecision)))) {
+		if newDinero.GetAmount() != int64(math.RoundToEven(float64(dinero.GetAmount())*(math.Pow(10, float64(newPrecision))))) {
 			t.Error("The converted amount its not correct")
 		}
 	}
 }
 
 func TestAdd(t *testing.T) {
-	const expectedResult float64 = 144545
+	const expectedResult int64 = 144545
 
 	dinero1, err := dinerogo.NewDinero(400, "USD", "en", 2)
 	if err != nil {
@@ -139,12 +139,12 @@ func TestAdd(t *testing.T) {
 		t.Error(err.Error())
 	}
 	if dineroResult.GetAmount() != expectedResult {
-		t.Errorf("The result of add it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
+		t.Errorf("The result of add it's not correct should be %f but is %f", float64(expectedResult), float64(dineroResult.GetAmount()))
 	}
 }
 
 func TestSubtract(t *testing.T) {
-	const expectedResult float64 = 64545
+	const expectedResult int64 = 64545
 
 	dinero1, err := dinerogo.NewDinero(104545, "USD", "en", 4)
 	if err != nil {
@@ -161,13 +161,13 @@ func TestSubtract(t *testing.T) {
 		t.Error(err.Error())
 	}
 	if dineroResult.GetAmount() != expectedResult {
-		t.Errorf("The result of subtract it's not correct should be %f but is %f", expectedResult, dineroResult.GetAmount())
+		t.Errorf("The result of subtract it's not correct should be %f but is %f", float64(expectedResult), float64(dineroResult.GetAmount()))
 	}
 }
 
 func TestMultiply(t *testing.T) {
-	const expectedResult float64 = 800
-	const multiplier float64 = 2.001
+	const expectedResult int64 = 800
+	const multiplier int64 = 2
 
 	dinero, err := dinerogo.NewDinero(400, "USD", "en", 2)
 	if err != nil {
@@ -176,13 +176,13 @@ func TestMultiply(t *testing.T) {
 	newDinero := dinero.Multiply(multiplier)
 
 	if newDinero.GetAmount() != expectedResult {
-		t.Errorf("The result of multiply it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+		t.Errorf("The result of multiply it's not correct should be %f but is %f", float64(expectedResult), float64(newDinero.GetAmount()))
 	}
 }
 
 func TestDivide(t *testing.T) {
-	const expectedResult float64 = 52
-	const divider float64 = 2
+	const expectedResult int64 = 52
+	const divider int64 = 2
 
 	dinero, err := dinerogo.NewDinero(105, "USD", "en", 2)
 	if err != nil {
@@ -194,14 +194,14 @@ func TestDivide(t *testing.T) {
 	}
 
 	if newDinero.GetAmount() != expectedResult {
-		t.Errorf("The result of divide it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+		t.Errorf("The result of divide it's not correct should be %f but is %f", float64(expectedResult), float64(newDinero.GetAmount()))
 	}
 }
 
 func TestPercentage(t *testing.T) {
-	const expectedResult float64 = 5000
+	const expectedResult int64 = 5000
 	const percentage uint8 = 50
-	const amount float64 = 10000
+	const amount int64 = 10000
 
 	dinero, err := dinerogo.NewDinero(amount, "USD", "en", 2)
 	if err != nil {
@@ -214,7 +214,7 @@ func TestPercentage(t *testing.T) {
 	}
 
 	if newDinero.GetAmount() != expectedResult {
-		t.Errorf("The result of divide it's not correct should be %f but is %f", expectedResult, newDinero.GetAmount())
+		t.Errorf("The result of percentage it's not correct should be %f but is %f", float64(expectedResult), float64(newDinero.GetAmount()))
 	}
 
 }
@@ -322,7 +322,7 @@ func TestGreatherThanOrEquals(t *testing.T) {
 }
 
 func TestIsZero(t *testing.T) {
-	const amount float64 = 0
+	const amount int64 = 0
 
 	dinero, err := dinerogo.NewDinero(amount, "USD", "fr", 2)
 	if err != nil {

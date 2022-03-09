@@ -8,14 +8,14 @@ import (
 
 // Dinero: Monetary object representation
 type Dinero struct {
-	Amount    float64 //Amount: The minium unity of the currency (1USD=100cents)
-	Currency  string  // Currency : Use the ISO4217 format (USD)
-	Locale    string  // Locale : Use the BCP 47 language tag.
-	Precision uint8   // Precision : represent the number of decimal places in the amount
+	Amount    int64  //Amount: The minium unity of the currency (1USD=100cents)
+	Currency  string // Currency : Use the ISO4217 format (USD)
+	Locale    string // Locale : Use the BCP 47 language tag.
+	Precision uint8  // Precision : represent the number of decimal places in the amount
 }
 
 // NewDinero : Function for create a new Dinero
-func NewDinero(amount float64, currency string, locale string, precision uint8) (*Dinero, error) {
+func NewDinero(amount int64, currency string, locale string, precision uint8) (*Dinero, error) {
 	if !IsValidCurrency(currency) {
 		return nil, errors.New("the currency is not valid in ISO4217")
 	}
