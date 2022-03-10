@@ -447,7 +447,40 @@ func TestMinimun(t *testing.T) {
 }
 
 //TODO: Implement
-func TestMaximun(t *testing.T) {}
+func TestMaximun(t *testing.T) {
+	const expectedAmount int64 = 10000
+	const expectedPrecision int64 = 2
+
+	dinero := dinerogo.Dinero{}
+
+	dineros := []dinerogo.Dinero{
+		{
+			Amount:    5000,
+			Precision: 2,
+			Currency:  "USD",
+		},
+		{
+			Amount:    10000,
+			Precision: 2,
+			Currency:  "USD",
+		},
+		{
+			Amount:    5000,
+			Precision: 3,
+			Currency:  "USD",
+		},
+		{
+			Amount:    2000,
+			Precision: 3,
+			Currency:  "USD",
+		},
+	}
+
+	maximunDinero := dinero.Maximun(dineros)
+	if maximunDinero.GetAmount() != expectedAmount {
+		t.Errorf("the value obtained is %f and the expected is %f with %f precision", float64(maximunDinero.GetAmount()), float64(expectedAmount), float64(expectedPrecision))
+	}
+}
 
 //TODO: Implement
 func TestGlobals(t *testing.T) {}
