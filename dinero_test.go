@@ -411,7 +411,40 @@ func TestToJson(t *testing.T) {}
 func TestNormalizePrecission(t *testing.T) {}
 
 //TODO: Implement
-func TestMinimun(t *testing.T) {}
+func TestMinimun(t *testing.T) {
+	const expectedAmount int64 = 2000
+	const expectedPrecision int64 = 3
+
+	dinero := dinerogo.Dinero{}
+
+	dineros := []dinerogo.Dinero{
+		{
+			Amount:    5000,
+			Precision: 2,
+			Currency:  "USD",
+		},
+		{
+			Amount:    10000,
+			Precision: 2,
+			Currency:  "USD",
+		},
+		{
+			Amount:    5000,
+			Precision: 3,
+			Currency:  "USD",
+		},
+		{
+			Amount:    2000,
+			Precision: 3,
+			Currency:  "USD",
+		},
+	}
+
+	minimunDinero := dinero.Minimun(dineros)
+	if minimunDinero.GetAmount() != expectedAmount {
+		t.Errorf("the value obtained is %f and the expected is %f with %f precision", float64(minimunDinero.GetAmount()), float64(expectedAmount), float64(expectedPrecision))
+	}
+}
 
 //TODO: Implement
 func TestMaximun(t *testing.T) {}

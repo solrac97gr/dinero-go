@@ -251,7 +251,28 @@ func (d *Dinero) IsPositive() bool {
 	return d.Amount > 0
 }
 
-// IsNegative Valid if the amount inside of the Dinero obj it's less than 0
+// IsNegative : Valid if the amount inside of the Dinero obj it's less than 0
 func (d *Dinero) IsNegative() bool {
 	return d.Amount < 0
+}
+
+// Minium : Use it for get the minimun value in a Array of Dineros
+func (d *Dinero) Minimun(dineros []Dinero) *Dinero {
+	var minAmount int64
+	var index int64
+	for i, dinero := range dineros {
+		convertedDinero := dinero.ConvertPrecision(2)
+		fmt.Println(i, dinero)
+		if i == 0 {
+			minAmount = convertedDinero.GetAmount()
+		} else {
+			if minAmount > convertedDinero.GetAmount() {
+				minAmount = convertedDinero.GetAmount()
+				index = int64(i)
+			}
+		}
+
+	}
+	result := dineros[index]
+	return &result
 }
