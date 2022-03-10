@@ -262,12 +262,31 @@ func (d *Dinero) Minimun(dineros []Dinero) *Dinero {
 	var index int64
 	for i, dinero := range dineros {
 		convertedDinero := dinero.ConvertPrecision(2)
-		fmt.Println(i, dinero)
 		if i == 0 {
 			minAmount = convertedDinero.GetAmount()
 		} else {
 			if minAmount > convertedDinero.GetAmount() {
 				minAmount = convertedDinero.GetAmount()
+				index = int64(i)
+			}
+		}
+
+	}
+	result := dineros[index]
+	return &result
+}
+
+//Maximun : Use it for get the maximun value in a Array of Dineros
+func (d *Dinero) Maximun(dineros []Dinero) *Dinero {
+	var maxAmount int64
+	var index int64
+	for i, dinero := range dineros {
+		convertedDinero := dinero.ConvertPrecision(2)
+		if i == 0 {
+			maxAmount = convertedDinero.GetAmount()
+		} else {
+			if maxAmount < convertedDinero.GetAmount() {
+				maxAmount = convertedDinero.GetAmount()
 				index = int64(i)
 			}
 		}
