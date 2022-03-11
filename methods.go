@@ -37,7 +37,10 @@ func (d *Dinero) GetPrecision() uint8 {
 
 //ConvertPrecision : Convert the decimal precision and the amount with a new precision
 func (d *Dinero) ConvertPrecision(newPrecision uint8) *Dinero {
-	if d.Precision != 0 {
+	if d.GetPrecision() == newPrecision {
+		return d
+	}
+	if d.GetPrecision() != 0 {
 		return &Dinero{
 			Amount:    int64(math.RoundToEven((float64(d.GetAmount()) / (math.Pow(10, float64(d.Precision)))) * (math.Pow(10, float64(newPrecision))))),
 			Currency:  d.Currency,
