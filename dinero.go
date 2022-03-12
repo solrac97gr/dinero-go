@@ -6,27 +6,56 @@ import (
 	"golang.org/x/text/language"
 )
 
+var DefaultCurrency string = "USD"
+var DefaultPrecision uint8 = 2
+var GlobalCurrency string = DefaultCurrency
+var GlobalPrecision uint8 = DefaultPrecision
+
 // Dinero: Monetary object representation
 type Dinero struct {
 	Amount    int64  //Amount: The minium unity of the currency (1USD=100cents)
 	Currency  string // Currency : Use the ISO4217 format (USD)
-	Locale    string // Locale : Use the BCP 47 language tag.
 	Precision uint8  // Precision : represent the number of decimal places in the amount
 }
 
-// NewDinero : Function for create a new Dinero
-func NewDinero(amount int64, currency string, locale string, precision uint8) (*Dinero, error) {
+// NewDinero : function for create a new dinero object with the Global currency and precision values or for use Default values in the package(USD and 2)
+func NewDinero(amount int64) *Dinero {
+	return &Dinero{
+		Amount:    amount,
+		Currency:  GlobalCurrency,
+		Precision: GlobalPrecision,
+	}
+}
+
+// NewDineroWithCurrency: Function for create a new Dinero object using only currency and amount
+func NewDineroWithCurrency(amount int64, currency string) (*Dinero, error) {
 	if !IsValidCurrency(currency) {
 		return nil, errors.New("the currency is not valid in ISO4217")
-	}
-
-	if !IsValidLocale(locale) {
-		return nil, errors.New("the locale is not valid in BCP 47 Language tag")
 	}
 	return &Dinero{
 		Amount:    amount,
 		Currency:  currency,
-		Locale:    locale,
+		Precision: 2,
+	}, nil
+}
+
+// NewDineroWithPrecision : Function for create a new Dinero with custom Precision by default is using 2
+func NewDineroWithPrecision(amount int64, precision uint8) *Dinero {
+	return &Dinero{
+		Amount:    amount,
+		Currency:  DefaultCurrency,
+		Precision: precision,
+	}
+}
+
+// NewDineroWithPrecisionAndCurrency : Function for create a new Detailed Dinero object with all parameters
+func NewDineroWithPrecisionAndCurrency(amount int64, currency string, precision uint8) (*Dinero, error) {
+	if !IsValidCurrency(currency) {
+		return nil, errors.New("the currency is not valid in ISO4217")
+	}
+	return &Dinero{
+		Amount:    amount,
+		Currency:  currency,
 		Precision: precision,
 	}, nil
 }
