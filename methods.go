@@ -16,20 +16,6 @@ func (d *Dinero) GetCurrency() string {
 	return d.Currency
 }
 
-// GetLocale : Get the current locale set of a Dinero obj
-func (d *Dinero) GetLocale() string {
-	return d.Locale
-}
-
-// SetLocale : Change the locale language of the Dinero obj using valid language tag (Spanish=es)
-func (d *Dinero) SetLocale(locale string) error {
-	if IsValidLocale(locale) {
-		d.Locale = locale
-		return nil
-	}
-	return errors.New("not valid locale format")
-}
-
 // GetPrecision : Get the decimal precision of the Dinero obj
 func (d *Dinero) GetPrecision() uint8 {
 	return d.Precision
@@ -44,7 +30,6 @@ func (d *Dinero) ConvertPrecision(newPrecision uint8) *Dinero {
 		return &Dinero{
 			Amount:    int64(math.RoundToEven((float64(d.GetAmount()) / (math.Pow(10, float64(d.Precision)))) * (math.Pow(10, float64(newPrecision))))),
 			Currency:  d.Currency,
-			Locale:    d.Locale,
 			Precision: newPrecision,
 		}
 	}
@@ -52,7 +37,6 @@ func (d *Dinero) ConvertPrecision(newPrecision uint8) *Dinero {
 
 		Amount:    int64(math.RoundToEven(float64(d.GetAmount()) * (math.Pow(10, float64(newPrecision))))),
 		Currency:  d.Currency,
-		Locale:    d.Locale,
 		Precision: newPrecision,
 	}
 }
@@ -66,7 +50,6 @@ func (d *Dinero) Add(dinero *Dinero) (*Dinero, error) {
 		return &Dinero{
 			Amount:    d.GetAmount() + dinero.GetAmount(),
 			Currency:  d.Currency,
-			Locale:    d.Locale,
 			Precision: d.Precision,
 		}, nil
 	}
@@ -74,9 +57,9 @@ func (d *Dinero) Add(dinero *Dinero) (*Dinero, error) {
 	if dinero.Precision > d.Precision {
 		newDinero := d.ConvertPrecision(dinero.Precision)
 		return &Dinero{
-			Amount:    dinero.GetAmount() + newDinero.GetAmount(),
-			Currency:  d.Currency,
-			Locale:    d.Locale,
+			Amount:   dinero.GetAmount() + newDinero.GetAmount(),
+			Currency: d.Currency,
+
 			Precision: dinero.Precision,
 		}, nil
 	}
@@ -85,7 +68,6 @@ func (d *Dinero) Add(dinero *Dinero) (*Dinero, error) {
 	return &Dinero{
 		Amount:    d.GetAmount() + newDinero.GetAmount(),
 		Currency:  d.Currency,
-		Locale:    d.Locale,
 		Precision: d.Precision,
 	}, nil
 
@@ -104,7 +86,6 @@ func (d *Dinero) Subtract(dinero *Dinero) (*Dinero, error) {
 		return &Dinero{
 			Amount:    d.GetAmount() - dinero.GetAmount(),
 			Currency:  d.Currency,
-			Locale:    d.Locale,
 			Precision: d.Precision,
 		}, nil
 	}
@@ -114,7 +95,6 @@ func (d *Dinero) Subtract(dinero *Dinero) (*Dinero, error) {
 		return &Dinero{
 			Amount:    dinero.GetAmount() - newDinero.GetAmount(),
 			Currency:  d.Currency,
-			Locale:    d.Locale,
 			Precision: dinero.Precision,
 		}, nil
 	}
@@ -123,7 +103,6 @@ func (d *Dinero) Subtract(dinero *Dinero) (*Dinero, error) {
 	return &Dinero{
 		Amount:    d.GetAmount() - newDinero.GetAmount(),
 		Currency:  d.Currency,
-		Locale:    d.Locale,
 		Precision: d.Precision,
 	}, nil
 }
@@ -133,7 +112,6 @@ func (d *Dinero) Multiply(multiplier int64) *Dinero {
 	return &Dinero{
 		Amount:    int64(math.RoundToEven(float64(d.GetAmount()) * float64(multiplier))),
 		Currency:  d.Currency,
-		Locale:    d.Locale,
 		Precision: d.Precision,
 	}
 }
@@ -146,7 +124,6 @@ func (d *Dinero) Divide(divider int64) (*Dinero, error) {
 	return &Dinero{
 		Amount:    int64(math.RoundToEven(float64(d.Amount) / float64(divider))),
 		Currency:  d.Currency,
-		Locale:    d.Locale,
 		Precision: d.Precision,
 	}, nil
 }
@@ -159,7 +136,6 @@ func (d *Dinero) Percentage(percentage uint8) (*Dinero, error) {
 	return &Dinero{
 		Amount:    int64(float64(d.Amount) * float64(percentage) / 100),
 		Currency:  d.Currency,
-		Locale:    d.Locale,
 		Precision: d.Precision,
 	}, nil
 }
