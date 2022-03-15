@@ -6,7 +6,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-var DefaultCurrency string = "USD"
+var DefaultCurrency string = USD
 var DefaultPrecision uint8 = 2
 var GlobalCurrency string = DefaultCurrency
 var GlobalPrecision uint8 = DefaultPrecision
