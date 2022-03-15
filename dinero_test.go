@@ -43,7 +43,7 @@ func TestNewDineroWithPrecision(t *testing.T) {
 
 func TestNewDineroWithCurrency(t *testing.T) {
 	const amount int64 = 3400
-	const currency string = "EUR"
+	const currency string = dinerogo.EUR
 
 	dinero, err := dinerogo.NewDineroWithCurrency(amount, currency)
 	if err != nil {
@@ -57,7 +57,7 @@ func TestNewDineroWithCurrency(t *testing.T) {
 
 func TestNewDineroWithPrecisionAndCurrency(t *testing.T) {
 	const amount int64 = 3400
-	_, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, "USD", 2)
+	_, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -66,7 +66,7 @@ func TestNewDineroWithPrecisionAndCurrency(t *testing.T) {
 func TestGetAmount(t *testing.T) {
 	const amount int64 = 3400
 
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(3400, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(3400, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -77,7 +77,7 @@ func TestGetAmount(t *testing.T) {
 
 func TestGetCurrency(t *testing.T) {
 	const amount int64 = 3400
-	const currency string = "USD"
+	const currency string = dinerogo.USD
 
 	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, currency, 2)
 	if err != nil {
@@ -90,7 +90,7 @@ func TestGetCurrency(t *testing.T) {
 
 func TestGetPrecision(t *testing.T) {
 	const amount int64 = 5000
-	const currency string = "EUR"
+	const currency string = dinerogo.EUR
 	const precision uint8 = 5
 
 	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, currency, precision)
@@ -106,7 +106,7 @@ func TestGetPrecision(t *testing.T) {
 
 func TestConvertPrecision(t *testing.T) {
 	const amount int64 = 100
-	const currency string = "USD"
+	const currency string = dinerogo.USD
 	const precision uint8 = 3
 	const newPrecision uint8 = 4
 
@@ -135,12 +135,12 @@ func TestConvertPrecision(t *testing.T) {
 func TestAdd(t *testing.T) {
 	const expectedResult int64 = 144545
 
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(400, "USD", 2)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(400, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Error creating the first Dinero")
 	}
 
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(104545, "USD", 4)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(104545, dinerogo.USD, 4)
 	if err != nil {
 		t.Error("Error creating the second Dinero")
 	}
@@ -157,11 +157,11 @@ func TestAdd(t *testing.T) {
 func TestSubtract(t *testing.T) {
 	const expectedResult int64 = 64545
 
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(104545, "USD", 4)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(104545, dinerogo.USD, 4)
 	if err != nil {
 		t.Error("Error creating the first Dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(400, "USD", 2)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(400, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Error creating the second Dinero")
 	}
@@ -180,7 +180,7 @@ func TestMultiply(t *testing.T) {
 	const expectedResult int64 = 800
 	const multiplier int64 = 2
 
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(400, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(400, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Error creating the first Dinero")
 	}
@@ -195,7 +195,7 @@ func TestDivide(t *testing.T) {
 	const expectedResult int64 = 52
 	const divider int64 = 2
 
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(105, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(105, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Error creating the first Dinero")
 	}
@@ -214,7 +214,7 @@ func TestPercentage(t *testing.T) {
 	const percentage uint8 = 50
 	const amount int64 = 10000
 
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Error creating the first Dinero")
 	}
@@ -238,11 +238,11 @@ func TestConvert(t *testing.T) {}
 
 //TODO: Implement
 func TestEqualsTo(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 2)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -258,11 +258,11 @@ func TestEqualsTo(t *testing.T) {
 
 //TODO: Implement
 func TestLessThan(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -277,11 +277,11 @@ func TestLessThan(t *testing.T) {
 
 //TODO: Implement
 func TestLessThanOrEquals(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -296,11 +296,11 @@ func TestLessThanOrEquals(t *testing.T) {
 
 //TODO: Implement
 func TestGreatherThan(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 3)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -315,11 +315,11 @@ func TestGreatherThan(t *testing.T) {
 
 //TODO: Implement
 func TestGreatherThanOrEquals(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 3)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -335,7 +335,7 @@ func TestGreatherThanOrEquals(t *testing.T) {
 func TestIsZero(t *testing.T) {
 	const amount int64 = 0
 
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(amount, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Fail to create the Dinero object")
 	}
@@ -347,7 +347,7 @@ func TestIsZero(t *testing.T) {
 }
 
 func TestIsPositive(t *testing.T) {
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(4000, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(4000, dinerogo.USD, 2)
 	if err != nil {
 		t.Log(err.Error())
 	}
@@ -357,7 +357,7 @@ func TestIsPositive(t *testing.T) {
 }
 
 func TestIsNegative(t *testing.T) {
-	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(-4000, "USD", 2)
+	dinero, err := dinerogo.NewDineroWithPrecisionAndCurrency(-4000, dinerogo.USD, 2)
 	if err != nil {
 		t.Log(err.Error())
 	}
@@ -373,11 +373,11 @@ func TestHasSubUnits(t *testing.T) {}
 func TestHasCents(t *testing.T) {}
 
 func TestHasSameCurrency(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 2)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -388,11 +388,11 @@ func TestHasSameCurrency(t *testing.T) {
 }
 
 func TestHasSameAmount(t *testing.T) {
-	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, "USD", 3)
+	dinero1, err := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
-	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, "USD", 2)
+	dinero2, err := dinerogo.NewDineroWithPrecisionAndCurrency(500, dinerogo.USD, 2)
 	if err != nil {
 		t.Error("Creating dinero")
 	}
@@ -432,22 +432,22 @@ func TestMinimun(t *testing.T) {
 		{
 			Amount:    5000,
 			Precision: 2,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 		{
 			Amount:    10000,
 			Precision: 2,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 		{
 			Amount:    5000,
 			Precision: 3,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 		{
 			Amount:    2000,
 			Precision: 3,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 	}
 
@@ -468,22 +468,22 @@ func TestMaximun(t *testing.T) {
 		{
 			Amount:    5000,
 			Precision: 2,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 		{
 			Amount:    10000,
 			Precision: 2,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 		{
 			Amount:    5000,
 			Precision: 3,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 		{
 			Amount:    2000,
 			Precision: 3,
-			Currency:  "USD",
+			Currency:  dinerogo.USD,
 		},
 	}
 
