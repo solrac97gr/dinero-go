@@ -426,30 +426,15 @@ func TestMinimun(t *testing.T) {
 	const expectedAmount int64 = 2000
 	const expectedPrecision int64 = 3
 
-	dinero := dinerogo.Dinero{}
+	dinero1, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 2)
+	dinero2, _ := dinerogo.NewDineroWithPrecisionAndCurrency(10000, dinerogo.USD, 2)
+	dinero3, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
+	dinero4, _ := dinerogo.NewDineroWithPrecisionAndCurrency(2000, dinerogo.USD, 3)
 
-	dineros := []dinerogo.Dinero{
-		{
-			Amount:    5000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    10000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    5000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    2000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-	}
+	dinero := dinerogo.NewDinero(50)
+
+	dineros := dinerogo.NewDineros()
+	dineros = append(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
 
 	minimunDinero := dinero.Minimun(dineros)
 	if minimunDinero.GetAmount() != expectedAmount {
@@ -462,30 +447,15 @@ func TestMaximun(t *testing.T) {
 	const expectedAmount int64 = 10000
 	const expectedPrecision int64 = 2
 
-	dinero := dinerogo.Dinero{}
+	dinero1, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 2)
+	dinero2, _ := dinerogo.NewDineroWithPrecisionAndCurrency(10000, dinerogo.USD, 2)
+	dinero3, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
+	dinero4, _ := dinerogo.NewDineroWithPrecisionAndCurrency(2000, dinerogo.USD, 3)
 
-	dineros := []dinerogo.Dinero{
-		{
-			Amount:    5000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    10000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    5000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    2000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-	}
+	dinero := dinerogo.NewDinero(50)
+
+	dineros := dinerogo.NewDineros()
+	dineros = append(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
 
 	maximunDinero := dinero.Maximun(dineros)
 	if maximunDinero.GetAmount() != expectedAmount {
