@@ -10,15 +10,15 @@ import (
 func TestNewDinero(t *testing.T) {
 	const amount int64 = 3400
 	dinero := dinerogo.NewDinero(amount)
-	if dinero.Amount != amount {
+	if dinero.GetAmount() != amount {
 		t.Error("The amount in the dinero object its not the spected")
 	}
 
-	if dinero.Precision != dinerogo.GlobalPrecision {
+	if dinero.GetPrecision() != dinerogo.GlobalPrecision {
 		t.Error("The precision in the dinero object its not the spected")
 	}
 
-	if dinero.Currency != dinerogo.GlobalCurrency {
+	if dinero.GetCurrency() != dinerogo.GlobalCurrency {
 		t.Error("The currency in the dinero object its not the spected")
 	}
 }
@@ -28,15 +28,15 @@ func TestNewDineroWithPrecision(t *testing.T) {
 	const precision uint8 = 3
 
 	dinero := dinerogo.NewDineroWithPrecision(amount, precision)
-	if dinero.Amount != amount {
+	if dinero.GetAmount() != amount {
 		t.Error("The amount in the dinero object its not the spected")
 	}
 
-	if dinero.Precision != precision {
+	if dinero.GetPrecision() != precision {
 		t.Error("The precision in the dinero object its not the spected")
 	}
 
-	if dinero.Currency != dinerogo.GlobalCurrency {
+	if dinero.GetCurrency() != dinerogo.GlobalCurrency {
 		t.Error("The currency in the dinero object its not the spected")
 	}
 }
@@ -50,7 +50,7 @@ func TestNewDineroWithCurrency(t *testing.T) {
 		t.Error("Fail to create the Dinero object")
 	}
 
-	if dinero.Precision != dinerogo.GlobalPrecision {
+	if dinero.GetPrecision() != dinerogo.GlobalPrecision {
 		t.Error("The precision in the dinero object its not the spected")
 	}
 }
@@ -121,8 +121,8 @@ func TestConvertPrecision(t *testing.T) {
 		t.Error("The convertion is not updating the precision")
 	}
 
-	if dinero.Precision != 0 {
-		if NewDineroWithPrecisionAndCurrency.GetAmount() != int64(math.RoundToEven((float64(dinero.GetAmount())/(math.Pow(10, float64(dinero.Precision))))*(math.Pow(10, float64(newPrecision))))) {
+	if dinero.GetPrecision() != 0 {
+		if NewDineroWithPrecisionAndCurrency.GetAmount() != int64(math.RoundToEven((float64(dinero.GetAmount())/(math.Pow(10, float64(dinero.GetPrecision()))))*(math.Pow(10, float64(newPrecision))))) {
 			t.Error("The converted amount its not correct")
 		}
 	} else {
@@ -426,30 +426,15 @@ func TestMinimun(t *testing.T) {
 	const expectedAmount int64 = 2000
 	const expectedPrecision int64 = 3
 
-	dinero := dinerogo.Dinero{}
+	dinero1, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 2)
+	dinero2, _ := dinerogo.NewDineroWithPrecisionAndCurrency(10000, dinerogo.USD, 2)
+	dinero3, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
+	dinero4, _ := dinerogo.NewDineroWithPrecisionAndCurrency(2000, dinerogo.USD, 3)
 
-	dineros := []dinerogo.Dinero{
-		{
-			Amount:    5000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    10000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    5000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    2000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-	}
+	dinero := dinerogo.NewDinero(50)
+
+	dineros := dinerogo.NewDineros()
+	dineros = append(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
 
 	minimunDinero := dinero.Minimun(dineros)
 	if minimunDinero.GetAmount() != expectedAmount {
@@ -462,30 +447,15 @@ func TestMaximun(t *testing.T) {
 	const expectedAmount int64 = 10000
 	const expectedPrecision int64 = 2
 
-	dinero := dinerogo.Dinero{}
+	dinero1, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 2)
+	dinero2, _ := dinerogo.NewDineroWithPrecisionAndCurrency(10000, dinerogo.USD, 2)
+	dinero3, _ := dinerogo.NewDineroWithPrecisionAndCurrency(5000, dinerogo.USD, 3)
+	dinero4, _ := dinerogo.NewDineroWithPrecisionAndCurrency(2000, dinerogo.USD, 3)
 
-	dineros := []dinerogo.Dinero{
-		{
-			Amount:    5000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    10000,
-			Precision: 2,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    5000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-		{
-			Amount:    2000,
-			Precision: 3,
-			Currency:  dinerogo.USD,
-		},
-	}
+	dinero := dinerogo.NewDinero(50)
+
+	dineros := dinerogo.NewDineros()
+	dineros = append(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
 
 	maximunDinero := dinero.Maximun(dineros)
 	if maximunDinero.GetAmount() != expectedAmount {
