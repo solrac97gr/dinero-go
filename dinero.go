@@ -13,17 +13,17 @@ var GlobalPrecision uint8 = DefaultPrecision
 
 // Dinero: Monetary object representation
 type dinero struct {
-	Amount    int64  //Amount: The minium unity of the currency (1USD=100cents)
-	Currency  string // Currency : Use the ISO4217 format (USD)
-	Precision uint8  // Precision : represent the number of decimal places in the amount
+	amount    int64  //Amount: The minium unity of the currency (1USD=100cents)
+	currency  string // Currency : Use the ISO4217 format (USD)
+	precision uint8  // Precision : represent the number of decimal places in the amount
 }
 
 // NewDinero : function for create a new dinero object with the Global currency and precision values or for use Default values in the package(USD and 2)
 func NewDinero(amount int64) *dinero {
 	return &dinero{
-		Amount:    amount,
-		Currency:  GlobalCurrency,
-		Precision: GlobalPrecision,
+		amount:    amount,
+		currency:  GlobalCurrency,
+		precision: GlobalPrecision,
 	}
 }
 
@@ -33,18 +33,18 @@ func NewDineroWithCurrency(amount int64, currency string) (*dinero, error) {
 		return nil, errors.New("the currency is not valid in ISO4217")
 	}
 	return &dinero{
-		Amount:    amount,
-		Currency:  currency,
-		Precision: 2,
+		amount:    amount,
+		currency:  currency,
+		precision: 2,
 	}, nil
 }
 
 // NewDineroWithPrecision : Function for create a new Dinero with custom Precision by default is using 2
 func NewDineroWithPrecision(amount int64, precision uint8) *dinero {
 	return &dinero{
-		Amount:    amount,
-		Currency:  DefaultCurrency,
-		Precision: precision,
+		amount:    amount,
+		currency:  DefaultCurrency,
+		precision: precision,
 	}
 }
 
@@ -54,9 +54,9 @@ func NewDineroWithPrecisionAndCurrency(amount int64, currency string, precision 
 		return nil, errors.New("the currency is not valid in ISO4217")
 	}
 	return &dinero{
-		Amount:    amount,
-		Currency:  currency,
-		Precision: precision,
+		amount:    amount,
+		currency:  currency,
+		precision: precision,
 	}, nil
 }
 

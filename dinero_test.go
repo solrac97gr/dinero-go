@@ -10,15 +10,15 @@ import (
 func TestNewDinero(t *testing.T) {
 	const amount int64 = 3400
 	dinero := dinerogo.NewDinero(amount)
-	if dinero.Amount != amount {
+	if dinero.GetAmount() != amount {
 		t.Error("The amount in the dinero object its not the spected")
 	}
 
-	if dinero.Precision != dinerogo.GlobalPrecision {
+	if dinero.GetPrecision() != dinerogo.GlobalPrecision {
 		t.Error("The precision in the dinero object its not the spected")
 	}
 
-	if dinero.Currency != dinerogo.GlobalCurrency {
+	if dinero.GetCurrency() != dinerogo.GlobalCurrency {
 		t.Error("The currency in the dinero object its not the spected")
 	}
 }
@@ -28,15 +28,15 @@ func TestNewDineroWithPrecision(t *testing.T) {
 	const precision uint8 = 3
 
 	dinero := dinerogo.NewDineroWithPrecision(amount, precision)
-	if dinero.Amount != amount {
+	if dinero.GetAmount() != amount {
 		t.Error("The amount in the dinero object its not the spected")
 	}
 
-	if dinero.Precision != precision {
+	if dinero.GetPrecision() != precision {
 		t.Error("The precision in the dinero object its not the spected")
 	}
 
-	if dinero.Currency != dinerogo.GlobalCurrency {
+	if dinero.GetCurrency() != dinerogo.GlobalCurrency {
 		t.Error("The currency in the dinero object its not the spected")
 	}
 }
@@ -50,7 +50,7 @@ func TestNewDineroWithCurrency(t *testing.T) {
 		t.Error("Fail to create the Dinero object")
 	}
 
-	if dinero.Precision != dinerogo.GlobalPrecision {
+	if dinero.GetPrecision() != dinerogo.GlobalPrecision {
 		t.Error("The precision in the dinero object its not the spected")
 	}
 }
@@ -121,8 +121,8 @@ func TestConvertPrecision(t *testing.T) {
 		t.Error("The convertion is not updating the precision")
 	}
 
-	if dinero.Precision != 0 {
-		if NewDineroWithPrecisionAndCurrency.GetAmount() != int64(math.RoundToEven((float64(dinero.GetAmount())/(math.Pow(10, float64(dinero.Precision))))*(math.Pow(10, float64(newPrecision))))) {
+	if dinero.GetPrecision() != 0 {
+		if NewDineroWithPrecisionAndCurrency.GetAmount() != int64(math.RoundToEven((float64(dinero.GetAmount())/(math.Pow(10, float64(dinero.GetPrecision()))))*(math.Pow(10, float64(newPrecision))))) {
 			t.Error("The converted amount its not correct")
 		}
 	} else {
