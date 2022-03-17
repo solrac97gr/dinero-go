@@ -61,7 +61,7 @@ func NewDineroWithPrecisionAndCurrency(amount int64, currency string, precision 
 }
 
 // NewDineros: Create a collection for create a dinero array
-func NewDineros() []dinero {
+func NewDineroCollection() []dinero {
 	return []dinero{}
 }
 

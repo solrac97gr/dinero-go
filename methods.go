@@ -279,3 +279,9 @@ func (d *dinero) Maximun(dineros []dinero) *dinero {
 func (d *dinero) AddToCollection(dineros []dinero, din ...dinero) []dinero {
 	return append(dineros, din...)
 }
+
+//RemoveFromCollection : Remove Dinero object from a Array of Dinero objects
+func (d *dinero) RemoveFromCollection(dineros []dinero, index int) []dinero {
+	//TODO: Add validation for only positive index
+	return append(dineros[:index], dineros[index+1:]...)
+}
