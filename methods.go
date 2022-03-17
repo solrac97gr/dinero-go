@@ -274,3 +274,8 @@ func (d *dinero) Maximun(dineros []dinero) *dinero {
 	result := dineros[index]
 	return &result
 }
+
+//AddToCollection : Add Dinero object to a Array of Dinero objects
+func (d *dinero) AddToCollection(dineros []dinero, din ...dinero) []dinero {
+	return append(dineros, din...)
+}

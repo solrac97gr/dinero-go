@@ -434,7 +434,8 @@ func TestMinimun(t *testing.T) {
 	dinero := dinerogo.NewDinero(50)
 
 	dineros := dinerogo.NewDineros()
-	dineros = append(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
+
+	dineros = dinero.AddToCollection(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
 
 	minimunDinero := dinero.Minimun(dineros)
 	if minimunDinero.GetAmount() != expectedAmount {
@@ -455,7 +456,7 @@ func TestMaximun(t *testing.T) {
 	dinero := dinerogo.NewDinero(50)
 
 	dineros := dinerogo.NewDineros()
-	dineros = append(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
+	dineros = dinero.AddToCollection(dineros, *dinero1, *dinero2, *dinero3, *dinero4)
 
 	maximunDinero := dinero.Maximun(dineros)
 	if maximunDinero.GetAmount() != expectedAmount {
