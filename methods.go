@@ -227,8 +227,8 @@ func (d *Dinero) GreatherThanOrEquals(dinero *Dinero) (bool, error) {
 
 // HasCents : Check if with the precision the dinero object have cents
 func (d *Dinero) HasCents() bool {
-	reminder := d.Amount % int64((math.Pow10(int(d.Precision))))
-	return reminder > 0
+	remainder := d.Amount % int64((math.Pow10(int(d.Precision))))
+	return remainder > 0
 }
 
 // HasSameCurrency : Compare the currency inside of the Dinero object
